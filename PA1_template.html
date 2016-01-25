@@ -104,6 +104,8 @@ img {
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
+<div id="the-strategy-to-imput-missing-values-is-to-take-the-average-of-all-the-values-and-imput-it-for-nas" class="section level3">
+<h3>The strategy to imput missing values is to take the average of all the values and imput it for NAs</h3>
 <pre class="r"><code>  sum(is.na(activity$steps))</code></pre>
 <pre><code>## [1] 2304</code></pre>
 <pre class="r"><code>  activity_copy &lt;- activity
@@ -118,6 +120,7 @@ img {
 <pre><code>## [1] 10766.19</code></pre>
 <pre class="r"><code>  median(daily_step_summary_copy$sum)</code></pre>
 <pre><code>## [1] 10766.19</code></pre>
+</div>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>

@@ -43,7 +43,9 @@ Next step is to load Dplyr package in R
   plot(daily_interval_summary$interval, daily_interval_summary$avg, type = "l", xlab = "Interval", ylab = "Average", main = "Time series plot of interval and the average steps taken")
 ```
 
+
 ## Imputing missing values
+###The strategy to imput missing values is to take the average of all the values and imput it for NAs
 ```{r, echo = TRUE}  
   sum(is.na(activity$steps))
   activity_copy <- activity

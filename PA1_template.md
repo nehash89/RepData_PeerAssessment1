@@ -71,7 +71,9 @@ Next step is to load Dplyr package in R
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
+
 ## Imputing missing values
+###The strategy to imput missing values is to take the average of all the values and imput it for NAs
 
 ```r
   sum(is.na(activity$steps))
