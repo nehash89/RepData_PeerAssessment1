@@ -46,7 +46,6 @@ Next step is to load Dplyr package in R
 ## Imputing missing values
 ```{r, echo = TRUE}  
   sum(is.na(activity$steps))
-  
   activity_copy <- activity
   indx <- which(is.na(activity_copy$steps), arr.ind=TRUE)
   activity_copy$steps[indx] <- mean(activity_copy$steps, na.rm = TRUE)
@@ -58,5 +57,26 @@ Next step is to load Dplyr package in R
   median(daily_step_summary_copy$sum)
 ```
 ## Are there differences in activity patterns between weekdays and weekends?
-
-
+```{r, echo = TRUE}  
+  
+  activity_weekday_test <- activity_copy
+  activity_weekday_test$date <- as.Date(activity_weekday_test$date)
+  weekdays1 <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
+  activity_weekday_test$wDay <- c('weekend', 'weekday')[(weekdays(activity_weekday_test$date) %in% weekdays1)+1L]
+  activity_weekday_test_1 <- activity_weekday_test
+  Weekday <- filter(activity_weekday_test_1, wDay == "weekday")
+  Weekend<- filter(activity_weekday_test_1, wDay == "weekend")
+  group_by(Weekday, interval)
+  group_by(Weekend, interval)
+  Weekday_Summary <- summarise(Weekday, avg = mean(steps))
+  Weekend_Summary <- summarise(Weekend, avg = mean(steps))
+  Weekday_Summary <- mutate(Weekday_Summary, Weekday = "Weekday")
+  Weekend_Summary <- mutate(Weekend_Summary, Weekday = "Weekend")
+  Summary_Week <- bind_rows(Weekday_Summary,Weekend_Summary)
+  
+  library(ggplot2)
+  Sum_Week <- Summary_Week
+ #P <- qplot(interval, avg, data = Sum_Week, facets = Weekday ~., geom = "line", xlab = "Interval", ylab = "Number of steps")
+  
+  
+```

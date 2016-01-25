@@ -121,6 +121,54 @@ img {
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
+<pre class="r"><code>  activity_weekday_test &lt;- activity_copy
+  activity_weekday_test$date &lt;- as.Date(activity_weekday_test$date)
+  weekdays1 &lt;- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
+  activity_weekday_test$wDay &lt;- c('weekend', 'weekday')[(weekdays(activity_weekday_test$date) %in% weekdays1)+1L]
+  activity_weekday_test_1 &lt;- activity_weekday_test
+  Weekday &lt;- filter(activity_weekday_test_1, wDay == &quot;weekday&quot;)
+  Weekend&lt;- filter(activity_weekday_test_1, wDay == &quot;weekend&quot;)
+  group_by(Weekday, interval)</code></pre>
+<pre><code>## Source: local data frame [12,960 x 4]
+## Groups: interval
+## 
+##      steps       date interval    wDay
+## 1  37.3826 2012-10-01        0 weekday
+## 2  37.3826 2012-10-01        5 weekday
+## 3  37.3826 2012-10-01       10 weekday
+## 4  37.3826 2012-10-01       15 weekday
+## 5  37.3826 2012-10-01       20 weekday
+## 6  37.3826 2012-10-01       25 weekday
+## 7  37.3826 2012-10-01       30 weekday
+## 8  37.3826 2012-10-01       35 weekday
+## 9  37.3826 2012-10-01       40 weekday
+## 10 37.3826 2012-10-01       45 weekday
+## ..     ...        ...      ...     ...</code></pre>
+<pre class="r"><code>  group_by(Weekend, interval)</code></pre>
+<pre><code>## Source: local data frame [4,608 x 4]
+## Groups: interval
+## 
+##    steps       date interval    wDay
+## 1      0 2012-10-06        0 weekend
+## 2      0 2012-10-06        5 weekend
+## 3      0 2012-10-06       10 weekend
+## 4      0 2012-10-06       15 weekend
+## 5      0 2012-10-06       20 weekend
+## 6      0 2012-10-06       25 weekend
+## 7      0 2012-10-06       30 weekend
+## 8      0 2012-10-06       35 weekend
+## 9      0 2012-10-06       40 weekend
+## 10     0 2012-10-06       45 weekend
+## ..   ...        ...      ...     ...</code></pre>
+<pre class="r"><code>  Weekday_Summary &lt;- summarise(Weekday, avg = mean(steps))
+  Weekend_Summary &lt;- summarise(Weekend, avg = mean(steps))
+  Weekday_Summary &lt;- mutate(Weekday_Summary, Weekday = &quot;Weekday&quot;)
+  Weekend_Summary &lt;- mutate(Weekend_Summary, Weekday = &quot;Weekend&quot;)
+  Summary_Week &lt;- bind_rows(Weekday_Summary,Weekend_Summary)
+  
+  library(ggplot2)
+  Sum_Week &lt;- Summary_Week
+ #P &lt;- qplot(interval, avg, data = Sum_Week, facets = Weekday ~., geom = &quot;line&quot;, xlab = &quot;Interval&quot;, ylab = &quot;Number of steps&quot;)</code></pre>
 </div>
 
 
